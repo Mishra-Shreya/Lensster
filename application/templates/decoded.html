@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="mt-4">
+        <div class="card card-style mb-3">
+            <div class="card-body justify-content-center">
+                <form action="" method="POST">
+                    {{ form.csrf_token() }}
+                    <fieldset class="form-group">
+                        <legend class="md-4">Get Translation</legend>
+                        <div class="form-group mb-4">
+                            {{ form.text_field.label(class="form-control-label") }}
+                            {% if form.text_field.errors %}
+                                {{ form.text_field(class="form-control form-control-sm-is-invalid") }}
+                            
+                                {% for error in form.text_field.errors %}
+                                    <div class="invalid-feedback">
+                                        <span>{{ error }}</span>
+                                    </div>
+                                {% endfor %}
+    
+                            {% else %}
+                                {{ form.text_field(class="form-control form-control-sm") }}
+                            {% endif %}
+                        </div>
+    
+                        <div class="input-group mb-3 ">
+                            <div class="input-group-prepend col-md-8">
+                                <label for="inputField" class="input-group-text">
+                                    {{ form.language_field.label }}
+                                </label>
+                            </div>
+                            {{ form.language_field(class="form-select") }}
+                        </div>
+    
+                        <div class="form-group border-botton pd-3 mt-4">
+                            {{ form.submit(class="btn btn-outline-info") }}
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+    {% if audio %}
+        <div class="d-flex justify-content-center mt-4">
+            <audio controls class="m-auto">
+                <source src="{{ url_for('static', filename='audio_files/' + file) }}">
+                Your browser does not support audio
+            </audio>
+        </div>
+    {% endif %}
+
+<script>
+    document.getElementById("submit").addEventListener("click", function(){
+        swal({
+            title: "File upload in progress",
+            text: "Please wait... This can take some time",
+            icon: "success",
+            buttom: "Okay"
+        })
+    })
+</script>
+
+{% endblock %}
